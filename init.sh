@@ -3,6 +3,9 @@
 rm ~/.bashrc
 ln -s ~/.dotfiles/.bashrc ~/.bashrc
 
+rm ~/.bash_aliases
+ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
+
 rm ~/.gitconfig
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
@@ -15,11 +18,11 @@ echo 'Installing git'
 sudo apt -y install git-all;
 
 ## wezterm
-echo 'Installing wezterm'
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-sudo apt update
-sudo apt -y install wezterm
+# echo 'Installing wezterm'
+# curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+# echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+# sudo apt update
+# sudo apt -y install wezterm
 
 
 ## Git Kraken
@@ -31,6 +34,7 @@ else
 	curl -LO https://release.gitkraken.com/linux/gitkraken-amd64.deb
 	echo 'Installing Gitkraken'
 	sudo dpkg -i gitkraken-amd64.deb
+	sudo rm gitkraken-amd64.deb
 fi
 
 ## Neovim
@@ -86,6 +90,7 @@ go version
 ## Install python
 sudo apt install -y python3
 sudo apt install -y python3-venv
+sudo apt isntall -y python3-pip
 
 ## Install dotnet
 curl -LO https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
