@@ -9,13 +9,16 @@ ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
 rm ~/.gitconfig
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
+## Move old configuration file but don't rmrf
+mv ~/.config/nvim ~/.config/_nvim_old
+ln -s ~/.dotfiles/nvim ~/.config/nvim/
+
 #Installs
 echo 'apt-get update'
 sudo apt-get update
 
 ## git
-echo 'Installing git'
-sudo apt -y install git-all;
+echo 'Installing git' sudo apt -y install git-all;
 
 ## wezterm
 # echo 'Installing wezterm'
@@ -26,7 +29,7 @@ sudo apt -y install git-all;
 
 
 ## Git Kraken
-if test -d /usr/bin/obsidian
+if test -d /usr/bin/gitkraken
 then
 	echo 'Gitkraken already installed'
 else
@@ -62,7 +65,7 @@ fi
 
 
 ## Obsidian
-if [ -d /usr/bin/obsidian ]; then
+if [ -f /usr/bin/obsidian ]; then
 	echo 'Obsidian already installed'
 else
 	echo 'Fetching obsidian'
@@ -74,17 +77,35 @@ else
 fi
 
 ## nvm
-echo 'Installing nvm'
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install 18
+if [ -d /home/michael/.nvm ]; then
+	echo 'nvm already installed'
+else
+	echo 'Installing nvm'
+	## @todo: pin this version check somehow
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+	nvm install 18
+fi
+
+## node
+# @todo pin this version check somehow
+if [ -d /home/michael/.nvm/versions/node/v18.19.1 ]; then
+	echo 'node already installed'
+else
+	echo 'Installing node'
+	nvm install 18
+fi
+
 
 ## xclip
-echo 'Installing xclip'
 ## Used for copying to clipboard from nvim
-sudo apt -y install xclip
+if [ -f /usr/bin/xclip ]; then
+	echo 'xclip already installed'
+else
+	sudo apt -y install xclip
+fi
 
 ## Install go
 echo 'Installing go'
@@ -105,8 +126,16 @@ sudo apt-get update
 sudo apt-get install -y dotnet-sdk-8.0
 
 # Install Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if [ -d ~/.cargo ]; then
+	echo 'Rust already installed'
+else
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
 
 # Fuzzy Finding
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+if [ -d ~/.fzf ]; then
+	echo 'fzf already installed'
+else
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+fi
