@@ -81,6 +81,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 nvm install 18
 
+## xclip
+echo 'Installing xclip'
+## Used for copying to clipboard from nvim
+sudo apt -y install xclip
+
 ## Install go
 echo 'Installing go'
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
