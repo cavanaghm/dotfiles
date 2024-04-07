@@ -118,7 +118,7 @@ go version
 ## Install python
 sudo apt install -y python3
 sudo apt install -y python3-venv
-sudo apt isntall -y python3-pip
+sudo apt install -y python3-pip
 
 ## Install dotnet
 curl -LO https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
