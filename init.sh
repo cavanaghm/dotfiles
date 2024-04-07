@@ -10,8 +10,10 @@ rm ~/.gitconfig
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
 ## Move old configuration file but don't rmrf
-mv ~/.config/nvim ~/.config/_nvim_old
-ln -s ~/.dotfiles/nvim ~/.config/nvim/
+if [ -d ~/.config/nvim ]; then
+	mv ~/.config/nvim ~/.config/_nvim_old
+fi
+ln -s ~/.dotfiles/nvim ~/.config/
 
 #Installs
 echo 'apt-get update'
@@ -29,7 +31,7 @@ echo 'Installing git' sudo apt -y install git-all;
 
 
 ## Git Kraken
-if test -d /usr/bin/gitkraken
+if test -f /usr/bin/gitkraken
 then
 	echo 'Gitkraken already installed'
 else
