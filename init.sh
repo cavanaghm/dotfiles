@@ -142,4 +142,4 @@ else
 	~/.fzf/install
 fi
 
-sudo apt autoremove
+sudo apt autoremove -y
