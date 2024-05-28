@@ -92,9 +92,10 @@ require('packer').startup(function(use)
 
   use "lukas-reineke/indent-blankline.nvim"
 
-  use "github/copilot.vim"
-  vim.g.copilot_no_tab_map = true
-  vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+  -- use "github/copilot.vim"
+  -- vim.g.copilot_no_tab_map = true
+  -- vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+  --
   -- use {
   --   "zbirenbaum/copilot.lua",
   --   cmd = "Copilot",

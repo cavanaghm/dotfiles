@@ -142,4 +142,12 @@ else
 	~/.fzf/install
 fi
 
+# if [ -d ~/.i3 ]; then
+# 	echo 'i3 already installed'
+# else
+# 	/usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2024.03.04_all.deb keyring.deb SHA256:f9bb4340b5ce0ded29b7e014ee9ce788006e9bbfe31e96c09b2118ab91fca734
+# 	sudo apt install ./keyring.deb
+# 	sudo apt update
+# 	sudo apt install -y i3
+
 sudo apt autoremove -y
