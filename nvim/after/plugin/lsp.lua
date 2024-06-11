@@ -9,6 +9,7 @@ lsp.ensure_installed({
 
   -- Python
   'pylsp',
+  'ruff',
 })
 
 -- Fix Undefined global 'vim'

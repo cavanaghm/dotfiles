@@ -149,5 +149,8 @@ fi
 # 	sudo apt install ./keyring.deb
 # 	sudo apt update
 # 	sudo apt install -y i3
+#
+
+pip install trash-cli --break-system-packages
 
 sudo apt autoremove -y
