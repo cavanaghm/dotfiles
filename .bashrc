@@ -142,3 +142,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+source <(kubectl completion bash)
