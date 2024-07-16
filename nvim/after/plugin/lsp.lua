@@ -6,6 +6,7 @@ lsp.ensure_installed({
   'tsserver',
   'gopls',
   'csharp_ls',
+  'templ',
 
   -- Python
   'pylsp',
@@ -22,6 +23,8 @@ lsp.configure('lua-language-server', {
         }
     }
 })
+
+vim.filetype.add({ extension = { templ = "templ" } })
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

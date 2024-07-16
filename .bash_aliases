@@ -7,7 +7,9 @@ alias work="cd ~/work"
 alias k="kubectl"
 
 alias air="~/go/bin/air"
+alias templ="~/go/bin/templ"
 
+alias rmf='/usr/bin/rm'
 alias rm='echo "Use trash-cli (alias rmt) instead of rm"'
 alias rmt='trash-put'
 
