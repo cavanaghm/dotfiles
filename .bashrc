@@ -128,3 +128,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 
+export NAS_MAC="24:5E:BE:48:A3:F6"
+export NET_DEVICE=$(~/.get_network_device)

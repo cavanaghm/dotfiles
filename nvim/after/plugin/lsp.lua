@@ -5,7 +5,6 @@ lsp.preset("recommended")
 lsp.ensure_installed({
   'tsserver',
   'gopls',
-  'csharp_ls',
   'templ',
 
   -- Python
