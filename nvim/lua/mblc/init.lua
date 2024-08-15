@@ -51,78 +51,114 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 
-      {'neovim/nvim-lspconfig'};
-      {'williamboman/mason.nvim'};
-      {'williamboman/mason-lspconfig.nvim'};
+  { 'neovim/nvim-lspconfig' },
+  { 'williamboman/mason.nvim' },
+  { 'williamboman/mason-lspconfig.nvim' },
+
+  -- Autocompletion
+  { 'hrsh7th/nvim-cmp' },
+  { 'hrsh7th/cmp-buffer' },
+  'hrsh7th/cmp-nvim-lsp',
+  { 'hrsh7th/cmp-path' },
+  { 'saadparwaiz1/cmp_luasnip' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-nvim-lua' },
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
+        return {
+          timeout_ms = 500,
+          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+        }
+      end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    },
+  },
+  -- Snippets
+  { 'L3MON4D3/LuaSnip' },
+  { 'rafamadriz/friendly-snippets' },
+  {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v1.x',
+    requires = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
 
       -- Autocompletion
-      {'hrsh7th/nvim-cmp'};
-      {'hrsh7th/cmp-buffer'};
-      'hrsh7th/cmp-nvim-lsp';
-      {'hrsh7th/cmp-path'};
-      {'saadparwaiz1/cmp_luasnip'};
-      {'hrsh7th/cmp-nvim-lsp'};
-      {'hrsh7th/cmp-nvim-lua'};
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-buffer' },
+      'hrsh7th/cmp-nvim-lsp',
+      { 'hrsh7th/cmp-path' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
 
       -- Snippets
-      {'L3MON4D3/LuaSnip'};
-      {'rafamadriz/friendly-snippets'};
-  {
-	  'VonHeikemen/lsp-zero.nvim',
-	  branch = 'v1.x',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
-		  {'williamboman/mason.nvim'},
-		  {'williamboman/mason-lspconfig.nvim'},
-
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},
-		  {'hrsh7th/cmp-buffer'},
-                  'hrsh7th/cmp-nvim-lsp',
-		  {'hrsh7th/cmp-path'},
-		  {'saadparwaiz1/cmp_luasnip'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
-
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
-		  {'rafamadriz/friendly-snippets'},
-	  }
-  };
+      { 'L3MON4D3/LuaSnip' },
+      { 'rafamadriz/friendly-snippets' },
+    }
+  },
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
-  };
+  },
 
   { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
-  };
+  },
 
   -- Git related plugins
-  'tpope/vim-fugitive';
-  'tpope/vim-rhubarb';
-  'lewis6991/gitsigns.nvim';
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
+  'lewis6991/gitsigns.nvim',
 
-  'navarasu/onedark.nvim'; -- Theme inspired by Atom
-  'morhetz/gruvbox';
-  'folke/tokyonight.nvim';
-  'nvim-lualine/lualine.nvim'; -- Fancier statusline
-  'numToStr/Comment.nvim'; -- "gc" to comment visual regions/lines
-  'tpope/vim-sleuth'; -- Detect tabstop and shiftwidth automatically
+  'navarasu/onedark.nvim', -- Theme inspired by Atom
+  'morhetz/gruvbox',
+  'folke/tokyonight.nvim',
+  'nvim-lualine/lualine.nvim', -- Fancier statusline
+  'numToStr/Comment.nvim',     -- "gc" to comment visual regions/lines
+  'tpope/vim-sleuth',          -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } };
+  { 'nvim-telescope/telescope.nvim',            branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 };
+  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',     cond = vim.fn.executable 'make' == 1 },
 
-  'junegunn/fzf';
-{ -- Fuzzy Finder (files, lsp, etc)
+  'junegunn/fzf',
+  { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -144,7 +180,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -227,14 +263,14 @@ require('lazy').setup({
     end,
   },
 
-  "lukas-reineke/indent-blankline.nvim";
+  "lukas-reineke/indent-blankline.nvim",
 
   -- "github/copilot.vim"
   -- vim.g.copilot_no_tab_map = true
   -- vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
-  'sbdchd/neoformat';
-  'tpope/vim-surround';
+  'sbdchd/neoformat',
+  'tpope/vim-surround',
 })
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`

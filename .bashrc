@@ -130,3 +130,8 @@ export NVM_DIR="$HOME/.nvm"
 
 export NAS_MAC="24:5E:BE:48:A3:F6"
 export NET_DEVICE=$(~/.get_network_device)
+
+export HSA_OVERRIDE_GFX_VERSION=10.3.0
+export HCC_AMDGPU_TARGET=gfx1030
+
+echo "sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0"
