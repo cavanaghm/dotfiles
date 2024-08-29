@@ -9,6 +9,9 @@ ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
 rm ~/.gitconfig
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
+rm ~/.get_network_device
+ln -s ~/.dotfiles/get_network_device ~/.get_network_device
+
 ## Move old configuration file but don't rmrf
 if [ -d ~/.config/nvim ]; then
 	mv ~/.config/nvim ~/.config/_nvim_old

@@ -129,3 +129,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 source <(kubectl completion bash)
+export NAS_MAC="24:5E:BE:48:A3:F6"
+export NET_DEVICE=$(~/.get_network_device)
+
+echo "sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0"
