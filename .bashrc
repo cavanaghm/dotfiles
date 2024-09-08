@@ -135,3 +135,11 @@ export HSA_OVERRIDE_GFX_VERSION=10.3.0
 export HCC_AMDGPU_TARGET=gfx1030
 
 echo "sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0"
+
+# pnpm
+export PNPM_HOME="/home/michael/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

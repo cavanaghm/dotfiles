@@ -113,6 +113,13 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 vim.keymap.set("n", "<leader>e", "<Cmd>Ex<CR>")
+vim.cmd("cabbr W w")
+vim.cmd("cabbr qwa wqa")
+vim.cmd("cabbr Wqa wqa")
+vim.cmd("cabbr Wqa wqa")
+vim.cmd("cabbr Q q")
+vim.cmd("ca f function")
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
