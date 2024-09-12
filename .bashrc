@@ -133,3 +133,11 @@ export NAS_MAC="24:5E:BE:48:A3:F6"
 export NET_DEVICE=$(~/.get_network_device)
 
 echo "sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0"
+
+# pnpm
+export PNPM_HOME="/home/michael/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
