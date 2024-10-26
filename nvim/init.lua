@@ -1,3 +1,8 @@
+local function is_deno_project()
+	-- This will check for the presence of a `deno.json` or `deno.jsonc` file in the root directory
+	local cwd = vim.fn.getcwd()
+	return vim.fn.glob(cwd .. "/deno.json") ~= "" or vim.fn.glob(cwd .. "/deno.jsonc") ~= ""
+end
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -14,14 +19,13 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 vim.opt.rnu = true
 
-vim.o.mouse = ""
-
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = "a"
+-- vim.opt.mouse = "a"
+vim.opt.mouse = ""
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
@@ -78,6 +82,12 @@ vim.opt.wildmenu = true
 vim.opt.wildmode = "longest,list"
 
 vim.opt.wrapscan = false
+
+vim.o.foldmethod = "indent"
+vim.o.foldenable = true
+
+vim.o.foldlevel = 99
+vim.o.foldminlines = 5
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -159,6 +169,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	"tpope/vim-surround", -- cs"' cs'"
 
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
@@ -461,6 +472,7 @@ require("lazy").setup({
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			local nvim_lsp = require("lspconfig")
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -483,9 +495,16 @@ require("lazy").setup({
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
-				-- But for many setups, the LSP (`tsserver`) will work just fine
-				tsserver = {},
-				--
+				-- But for many setups, the LSP (`ts_ls`) will work just fine
+				ts_ls = {
+					on_attach = on_attach,
+					root_dir = nvim_lsp.util.root_pattern("package.json"),
+					single_file_support = false,
+				}, --
+				denols = {
+					on_attach = on_attach,
+					root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+				},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -688,6 +707,80 @@ require("lazy").setup({
 			})
 		end,
 	},
+
+	-- {
+	-- 	"yetone/avante.nvim",
+	-- 	event = "VeryLazy",
+	-- 	lazy = false,
+	-- 	version = false, -- set this if you want to always pull the latest change
+	-- 	opts = {
+	-- 		provider = "ollama",
+	-- 		vendors = {
+	-- 			ollama = {
+	-- 				["local"] = true,
+	-- 				endpoint = "127.0.0.1:11434/v1",
+	-- 				model = "codeqwen:latest",
+	-- 				parse_curl_args = function(opts, code_opts)
+	-- 					return {
+	-- 						url = opts.endpoint .. "/chat/completions",
+	-- 						headers = {
+	-- 							["Accept"] = "application/json",
+	-- 							["Content-Type"] = "application/json",
+	-- 						},
+	-- 						body = {
+	-- 							model = opts.model,
+	-- 							messages = require("avante.providers").copilot.parse_message(code_opts), -- you can make your own message, but this is very advanced
+	-- 							max_tokens = 2048,
+	-- 							stream = true,
+	-- 						},
+	-- 					}
+	-- 				end,
+	-- 				parse_response_data = function(data_stream, event_state, opts)
+	-- 					require("avante.providers").openai.parse_response(data_stream, event_state, opts)
+	-- 				end,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+	-- 	build = "make",
+	-- 	-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"stevearc/dressing.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		--- The below dependencies are optional,
+	-- 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+	-- 		{
+	-- 			-- support for image pasting
+	-- 			"HakonHarnes/img-clip.nvim",
+	-- 			event = "VeryLazy",
+	-- 			opts = {
+	-- 				-- recommended settings
+	-- 				default = {
+	-- 					embed_image_as_base64 = false,
+	-- 					prompt_for_file_name = false,
+	-- 					drag_and_drop = {
+	-- 						insert_mode = true,
+	-- 					},
+	-- 					-- required for Windows users
+	-- 					use_absolute_path = true,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			-- Make sure to set this up properly if you have lazy=true
+	-- 			"MeanderingProgrammer/render-markdown.nvim",
+	-- 			opts = {
+	-- 				file_types = { "markdown", "Avante" },
+	-- 			},
+	-- 			ft = { "markdown", "Avante" },
+	-- 		},
+	-- 	},
+	-- 	init = function()
+	-- 		require("avante_lib").load()
+	-- 	end,
+	-- },
 
 	{ -- You can easily change to a different colorscheme.
 		-- Change the name of the colorscheme plugin below, and then

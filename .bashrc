@@ -118,19 +118,21 @@ fi
 
 export QT_QPA_PLATFORM=xcb
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+source <(kubectl completion bash)
+export NAS_MAC="24:5E:BE:48:A3:F6"
+
+# Paths
+## Nvim
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
+## nvm	
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 . "$HOME/.cargo/env"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-
-source <(kubectl completion bash)
-export NAS_MAC="24:5E:BE:48:A3:F6"
-export NET_DEVICE=$(~/.get_network_device)
 
 echo "sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0"
 
@@ -141,3 +143,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+## Go
+export PATH=$PATH:/usr/local/go/bin
+export PATH=${PATH}:`go env GOPATH`/bin
+. "/home/mc/.deno/env"

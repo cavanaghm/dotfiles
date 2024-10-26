@@ -23,7 +23,10 @@ echo 'apt-get update'
 sudo apt-get update
 
 ## git
-echo 'Installing git' sudo apt -y install git-all;
+echo 'Installing git' sudo apt -y install git
+
+## curl
+echo "Installing curl" sudo apt install curl
 
 ## wezterm
 # echo 'Installing wezterm'
@@ -34,16 +37,16 @@ echo 'Installing git' sudo apt -y install git-all;
 
 
 ## Git Kraken
-if test -f /usr/bin/gitkraken
-then
-	echo 'Gitkraken already installed'
-else
-	echo 'Fetching Gitkraken'
-	curl -LO https://release.gitkraken.com/linux/gitkraken-amd64.deb
-	echo 'Installing Gitkraken'
-	sudo dpkg -i gitkraken-amd64.deb
-	sudo rm gitkraken-amd64.deb
-fi
+# if test -f /usr/bin/gitkraken
+# then
+# 	echo 'Gitkraken already installed'
+# else
+# 	echo 'Fetching Gitkraken'
+# 	curl -LO https://release.gitkraken.com/linux/gitkraken-amd64.deb
+# 	echo 'Installing Gitkraken'
+# 	sudo dpkg -i gitkraken-amd64.deb
+# 	sudo rm gitkraken-amd64.deb
+# fi
 
 ## Neovim
 if [ -d /opt/nvim-linux64 ]; then
@@ -58,28 +61,17 @@ else
 	rm nvim-linux64.tar.gz
 fi
 
-## Packer
-# @todo update to lazy.nvim
-if [ -d ~/.local/share/nvim/site/pack/packer ]; then
-	echo 'Packer already installed'
-else
-	git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-	~/.local/share/nvim/site/pack/packer/start/packer.nvim
-fi
-
-
-
 ## Obsidian
-if [ -f /usr/bin/obsidian ]; then
-	echo 'Obsidian already installed'
-else
-	echo 'Fetching obsidian'
-	curl -LO https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.11/obsidian_1.5.11_amd64.deb
-	echo 'Installing obsidian'
-	sudo dpkg -i obsidian_1.5.11_amd64.deb
-	echo 'Cleaning up'
-	rm obsidian_1.5.11_amd64.deb
-fi
+# if [ -f /usr/bin/obsidian ]; then
+# 	echo 'Obsidian already installed'
+# else
+# 	echo 'Fetching obsidian'
+# 	curl -LO https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.11/obsidian_1.5.11_amd64.deb
+# 	echo 'Installing obsidian'
+# 	sudo dpkg -i obsidian_1.5.11_amd64.deb
+# 	echo 'Cleaning up'
+# 	rm obsidian_1.5.11_amd64.deb
+# fi
 
 ## nvm
 if [ -d /home/michael/.nvm ]; then
@@ -112,24 +104,17 @@ else
 	sudo apt -y install xclip
 fi
 
-## Install go
-echo 'Installing go'
-sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-export PATH=${PATH}:`go env GOPATH`/bin
-go version
-
 ## Install python
 sudo apt install -y python3
 sudo apt install -y python3-venv
 sudo apt install -y python3-pip
 
 ## Install dotnet
-curl -LO https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
-sudo dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-sudo apt-get update
-sudo apt-get install -y dotnet-sdk-8.0
+# curl -LO https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
+# sudo dpkg -i packages-microsoft-prod.deb
+# rm packages-microsoft-prod.deb
+# sudo apt-get update
+# sudo apt-get install -y dotnet-sdk-8.0
 
 # Install Rust
 if [ -d ~/.cargo ]; then
@@ -154,7 +139,5 @@ fi
 # 	sudo apt update
 # 	sudo apt install -y i3
 #
-
-pip install trash-cli --break-system-packages
 
 sudo apt autoremove -y
